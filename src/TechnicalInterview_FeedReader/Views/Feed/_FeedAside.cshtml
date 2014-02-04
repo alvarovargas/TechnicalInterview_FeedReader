@@ -1,0 +1,13 @@
+﻿<div>  
+    @using (Html.BeginForm("Search", "Feed", FormMethod.Post, new { id = "searchForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.TextBox("searchString");
+        <input type="submit" value="Search" />
+    }  
+  
+    @Html.ActionLink("Feeds Home", "Index", "Feed") |
+    @Html.ActionLink("Subscribe to a new feed", "Create", "Feed") |
+    @Html.ActionLink("Manage Feeds", "Manage", "Feed")
+<hr />    
+</div>

@@ -10,14 +10,14 @@ namespace TechnicalInterview_FeedReader.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            ViewBag.Message = "If this were a real web app, we'd put a really important message here. I'm sure you'd be really impressed.";
 
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
+            ViewBag.Message = "This page is the About page. Yep, it shows you about stuff.";
 
             return View();
         }
@@ -25,6 +25,13 @@ namespace TechnicalInterview_FeedReader.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult Feeds()
+        {
+            ViewBag.Message = "This is where the feeds live.";
 
             return View();
         }

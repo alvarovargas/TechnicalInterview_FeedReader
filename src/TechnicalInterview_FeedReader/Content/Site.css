@@ -252,6 +252,11 @@ section.feature {
     padding: 10px;
 }
 
+section.details {
+    background-color: #fff;
+    padding: 40px;
+}
+
 /* ordered list */
 ol.round {
     list-style-type: none;

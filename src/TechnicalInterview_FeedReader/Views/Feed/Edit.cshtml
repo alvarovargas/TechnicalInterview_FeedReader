@@ -1,0 +1,51 @@
+﻿@model TechnicalInterview_FeedReader.Models.Feed
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+@Html.Partial("_FeedAside")
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Feed</legend>
+
+        @Html.HiddenFor(model => model.ID)
+
+        <table>
+            <tr>
+                <td align="right">
+                    @Html.LabelFor(model => model.Name)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    @Html.LabelFor(model => model.Url)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.Url)
+                    @Html.ValidationMessageFor(model => model.Url)
+                </td>
+            </tr>
+            <tr>
+                <td>                    
+                </td>
+                <td align="right">
+                    <input type="submit" value="Save" /> @Html.ActionLink("Cancel", "Index")
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
