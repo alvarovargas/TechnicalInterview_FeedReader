@@ -40,6 +40,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="QDFeedParser">
+      <HintPath>..\packages\qdfeed.1.1.0\lib\net45\QDFeedParser.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -191,10 +194,9 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Feed.cs" />
     <Compile Include="Models\FeedItem.cs" />
-    <Compile Include="Models\FeedParse.cs" />
+    <Compile Include="Models\FeedMachine.cs" />
     <Compile Include="Models\FeedsDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\FeedQueries.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -309,9 +311,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Feed\Index.cshtml" />
     <Content Include="Views\Feed\Create.cshtml" />
-    <Content Include="Views\Feed\Edit.cshtml" />
     <Content Include="Views\Feed\Delete.cshtml" />
-    <Content Include="Views\Feed\Details.cshtml" />
     <Content Include="Views\Feed\_FeedAside.cshtml" />
     <Content Include="Views\Feed\Search.cshtml" />
     <Content Include="Views\Feed\Manage.cshtml" />

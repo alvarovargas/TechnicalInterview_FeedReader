@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TechnicalInterview_FeedReader.Models;
-using TechnicalInterview_FeedReader.Queries;
 
 namespace TechnicalInterview_FeedReader.Controllers
 {
@@ -12,9 +11,6 @@ namespace TechnicalInterview_FeedReader.Controllers
     [Authorize]
     public class FeedController : Controller
     {
-
-        FeedsDB db = new FeedsDB();
-
         public ActionResult Index()
         {
             return RedirectToAction("Search");
@@ -22,12 +18,26 @@ namespace TechnicalInterview_FeedReader.Controllers
 
         public ActionResult Manage()
         {
-            return View(FeedQueries.ListByUser(db.Feeds, User.Identity.Name));
+            return View(FeedMachine.ListFeedsByUser(User.Identity.Name));
+        }
+
+        public ActionResult UpdateAll(string returnUrl)
+        {
+            FeedMachine.UpdateAll(User.Identity.Name);
+
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }            
         }
                 
         public ActionResult Search(string searchString = "*")
         {
-            return View(FeedQueries.SearchAll(db.Feeds, User.Identity.Name, searchString));
+            return View(FeedMachine.SearchAll(User.Identity.Name, searchString));
         }
 
         public ActionResult Create()
@@ -39,28 +49,14 @@ namespace TechnicalInterview_FeedReader.Controllers
         public ActionResult Create(Feed newFeed)
         {
             newFeed.UserName = User.Identity.Name;
-            db.Feeds.Add(newFeed);
-            db.SaveChanges();
+            FeedMachine.CreateNewFeed(newFeed);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id = -1)
+        [HttpPost]
+        public ActionResult Read(int feedItemId = 0)
         {
-            if (id == -1)
-            {
-                return RedirectToAction("Index");
-            }
-            var feed = FeedQueries.FindById(db.Feeds, id);
-            return View(feed);
-        }
-
-        [HttpPost]        
-        public ActionResult Edit(Feed feed)
-        {
-            var feedToEdit = FeedQueries.FindById(db.Feeds, feed.ID);
-            feedToEdit.Name = feed.Name;
-            feedToEdit.Url = feed.Url;
-            db.SaveChanges();
+            if (feedItemId > 0) { FeedMachine.MarkItemAsRead(feedItemId); }
             return RedirectToAction("Index");
         }
 
@@ -70,29 +66,17 @@ namespace TechnicalInterview_FeedReader.Controllers
             {
                 return RedirectToAction("Index");
             }
-            var feed = FeedQueries.FindById(db.Feeds, id);
-            return View(feed);
+            return View(FeedMachine.FindFeedById(id));
         }
 
         [HttpPost]
         public ActionResult Delete(Feed feed)
         {
-            db.Feeds.Remove(FeedQueries.FindById(db.Feeds, feed.ID));
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            FeedMachine.DeleteFeedById(feed.ID);
+            return RedirectToAction("Manage");
         }
 
-        //
-        public ActionResult Details(int id = -1)
-        {
-            if (id == -1)
-            {
-                return RedirectToAction("Index");
-            }
-            var feed = FeedQueries.FindById(db.Feeds, id);
-            ViewBag.CurrentFeedTitle = feed.Name;
-            return View(FeedParse.GetFeedItems(FeedQueries.FindById(db.Feeds, id)));
-        }
+        
 
     }
 }

@@ -12,8 +12,11 @@ namespace TechnicalInterview_FeedReader.Models
         [Required]
         public string Name { get; set; }
 
+        [Url]
         [Required]
         public string Url { get; set; }
         public string UserName { get; set; }
+        public DateTime LastUpdated { get; set; }
+
     }
 }

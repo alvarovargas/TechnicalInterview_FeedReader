@@ -6,28 +6,31 @@
 
 <h2>Feeds</h2>
 @Html.Partial("_FeedAside")
+ @ViewBag.CurrentFeedTitle
 <table>
-    <tr>
-        <td>
-            @ViewBag.CurrentFeedTitle
-            
-        </td>
-    </tr>
-
+    
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td class="feeditem">
+                
+                @using (Html.BeginForm("Read", "Feed", FormMethod.Post))
+                {
+                    <input type="hidden" name="feedItemId" value="@item.ID" />
+                    <input type="submit" value="Mark As Read" /> @item.DatePublished
+                    <br /><font>URL:</font> <a href="@item.ItemUrl" target="_blank">@item.ItemUrl</a>
+                   
+                }                
+                <h2>@item.Title</h2>                
+                <section class="feeditemdetails">
+                    @Html.Raw(item.Text)
+                </section>
 
-                <details title="details">
-                    <summary>@item.Title</summary>
-                    <br />
-                    URL: <a href="@item.ItemUrl" target="_blank">@item.ItemUrl</a><br />
-                    <br />
-                    <section class="details">
-                        @Html.Raw(item.Text)
-                    </section>
-                </details>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br /><br />
             </td>
         </tr>
     }

@@ -37,6 +37,9 @@ namespace TechnicalInterview_FeedReader.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
+                // update all of the feeds for this user after each login.
+                FeedMachine.UpdateAll(model.UserName);
+
                 return RedirectToLocal(returnUrl);
             }
 

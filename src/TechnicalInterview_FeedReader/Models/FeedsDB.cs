@@ -15,5 +15,6 @@ namespace TechnicalInterview_FeedReader.Models
         }
 
         public DbSet<Feed> Feeds { get; set; }
+        public DbSet<FeedItem> FeedItems { get; set; }
     }
 }
